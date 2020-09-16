@@ -20,6 +20,17 @@ export interface UserFragment_reactionsCount {
   count: number;
 }
 
+export interface UserFragment_searchLogs_shortLink {
+  __typename: "ShortLink";
+  long: string | null;
+}
+
+export interface UserFragment_searchLogs {
+  __typename: "SearchLog";
+  createdAt: any;
+  shortLink: UserFragment_searchLogs_shortLink;
+}
+
 export interface UserFragment_reactions_reactionKind {
   __typename: "ReactionKind";
   /**
@@ -84,6 +95,7 @@ export interface UserFragment {
   reviewCount: number;
   reviews: UserFragment_reviews[];
   reactionsCount: UserFragment_reactionsCount[] | null;
+  searchLogs: UserFragment_searchLogs[] | null;
   contributions: number;
   pictureUrl: string | null;
   rank: string | null;

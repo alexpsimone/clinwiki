@@ -26,6 +26,12 @@ const FRAGMENT = gql`
       name
       count
     }
+    searchLogs{
+      createdAt
+      shortLink{
+        long
+      }
+    }
     contributions
     pictureUrl
     rank

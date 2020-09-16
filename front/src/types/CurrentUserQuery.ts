@@ -20,6 +20,17 @@ export interface CurrentUserQuery_me_reactionsCount {
   count: number;
 }
 
+export interface CurrentUserQuery_me_searchLogs_shortLink {
+  __typename: "ShortLink";
+  long: string | null;
+}
+
+export interface CurrentUserQuery_me_searchLogs {
+  __typename: "SearchLog";
+  createdAt: any;
+  shortLink: CurrentUserQuery_me_searchLogs_shortLink;
+}
+
 export interface CurrentUserQuery_me_reactions_reactionKind {
   __typename: "ReactionKind";
   /**
@@ -84,6 +95,7 @@ export interface CurrentUserQuery_me {
   reviewCount: number;
   reviews: CurrentUserQuery_me_reviews[];
   reactionsCount: CurrentUserQuery_me_reactionsCount[] | null;
+  searchLogs: CurrentUserQuery_me_searchLogs[] | null;
   contributions: number;
   pictureUrl: string | null;
   rank: string | null;

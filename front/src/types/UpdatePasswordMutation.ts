@@ -22,6 +22,17 @@ export interface UpdatePasswordMutation_updatePassword_user_reactionsCount {
   count: number;
 }
 
+export interface UpdatePasswordMutation_updatePassword_user_searchLogs_shortLink {
+  __typename: "ShortLink";
+  long: string | null;
+}
+
+export interface UpdatePasswordMutation_updatePassword_user_searchLogs {
+  __typename: "SearchLog";
+  createdAt: any;
+  shortLink: UpdatePasswordMutation_updatePassword_user_searchLogs_shortLink;
+}
+
 export interface UpdatePasswordMutation_updatePassword_user_reactions_reactionKind {
   __typename: "ReactionKind";
   /**
@@ -86,6 +97,7 @@ export interface UpdatePasswordMutation_updatePassword_user {
   reviewCount: number;
   reviews: UpdatePasswordMutation_updatePassword_user_reviews[];
   reactionsCount: UpdatePasswordMutation_updatePassword_user_reactionsCount[] | null;
+  searchLogs: UpdatePasswordMutation_updatePassword_user_searchLogs[] | null;
   contributions: number;
   pictureUrl: string | null;
   rank: string | null;

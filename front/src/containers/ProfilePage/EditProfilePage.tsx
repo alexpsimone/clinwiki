@@ -240,6 +240,22 @@ class EditProfilePage extends React.Component<
   handleDisplayChange = display => {
     this.setState({ currentDisplay: display });
   };
+
+  renderSearchLogs = () =>{
+    return(
+    <div >
+
+      {/* {
+      console.log(JSON.parse(this.props.user!.searchLogs![0]!.shortLink!.long|| ""))} */}
+      <h2>Previous Searches:</h2>
+      {/* {this.props.user!.searchLogs!.map(log =>(
+        <div id={log.id}>
+          {JSON.parse(log.shortLink.long|| "")}
+        </div>
+      ))} */}
+    </div>
+  )
+  }
   renderResults = email => {
     switch (this.state.currentDisplay) {
       case 'contributions':
@@ -352,6 +368,7 @@ class EditProfilePage extends React.Component<
           ) : (
               <div>No User</div>
             )}
+            {this.renderSearchLogs()}
         </ThemedMainContainer>
       );
     }

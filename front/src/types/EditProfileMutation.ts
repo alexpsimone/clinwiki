@@ -22,6 +22,17 @@ export interface EditProfileMutation_updateProfile_user_reactionsCount {
   count: number;
 }
 
+export interface EditProfileMutation_updateProfile_user_searchLogs_shortLink {
+  __typename: "ShortLink";
+  long: string | null;
+}
+
+export interface EditProfileMutation_updateProfile_user_searchLogs {
+  __typename: "SearchLog";
+  createdAt: any;
+  shortLink: EditProfileMutation_updateProfile_user_searchLogs_shortLink;
+}
+
 export interface EditProfileMutation_updateProfile_user_reactions_reactionKind {
   __typename: "ReactionKind";
   /**
@@ -86,6 +97,7 @@ export interface EditProfileMutation_updateProfile_user {
   reviewCount: number;
   reviews: EditProfileMutation_updateProfile_user_reviews[];
   reactionsCount: EditProfileMutation_updateProfile_user_reactionsCount[] | null;
+  searchLogs: EditProfileMutation_updateProfile_user_searchLogs[] | null;
   contributions: number;
   pictureUrl: string | null;
   rank: string | null;
