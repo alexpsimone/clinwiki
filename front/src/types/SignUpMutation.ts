@@ -22,13 +22,87 @@ export interface SignUpMutation_signUp_user_reactionsCount {
   count: number;
 }
 
+export interface SignUpMutation_signUp_user_searchLogs_shortLink_searchParams_sorts {
+  __typename: "Sort";
+  /**
+   * Column to sort by
+   */
+  id: string;
+  /**
+   * Sort in descending order if true
+   */
+  desc: boolean | null;
+}
+
+export interface SignUpMutation_signUp_user_searchLogs_shortLink_searchParams_aggFilters {
+  __typename: "AggFilter";
+  /**
+   * The field we are filtering on
+   */
+  field: string;
+  /**
+   * The values we are filtering for that field
+   */
+  values: string[];
+  /**
+   * The start value (inclusive) for a range query
+   */
+  gte: string | null;
+  /**
+   * The end value (inclusive) for a range query
+   */
+  lte: string | null;
+  /**
+   * Whether to include missing fields
+   */
+  includeMissingFields: boolean | null;
+}
+
+export interface SignUpMutation_signUp_user_searchLogs_shortLink_searchParams_crowdAggFilters {
+  __typename: "AggFilter";
+  /**
+   * The field we are filtering on
+   */
+  field: string;
+  /**
+   * The values we are filtering for that field
+   */
+  values: string[];
+  /**
+   * The start value (inclusive) for a range query
+   */
+  gte: string | null;
+  /**
+   * The end value (inclusive) for a range query
+   */
+  lte: string | null;
+  /**
+   * Whether to include missing fields
+   */
+  includeMissingFields: boolean | null;
+}
+
+export interface SignUpMutation_signUp_user_searchLogs_shortLink_searchParams {
+  __typename: "SearchParams";
+  /**
+   * A Json version of the SearchQueryInput type
+   */
+  q: string | null;
+  page: number | null;
+  pageSize: number | null;
+  sorts: SignUpMutation_signUp_user_searchLogs_shortLink_searchParams_sorts[] | null;
+  aggFilters: SignUpMutation_signUp_user_searchLogs_shortLink_searchParams_aggFilters[] | null;
+  crowdAggFilters: SignUpMutation_signUp_user_searchLogs_shortLink_searchParams_crowdAggFilters[] | null;
+}
+
 export interface SignUpMutation_signUp_user_searchLogs_shortLink {
   __typename: "ShortLink";
-  long: string | null;
+  searchParams: SignUpMutation_signUp_user_searchLogs_shortLink_searchParams | null;
 }
 
 export interface SignUpMutation_signUp_user_searchLogs {
   __typename: "SearchLog";
+  id: number;
   createdAt: any;
   shortLink: SignUpMutation_signUp_user_searchLogs_shortLink;
 }

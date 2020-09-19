@@ -27,9 +27,32 @@ const FRAGMENT = gql`
       count
     }
     searchLogs{
+      id
       createdAt
       shortLink{
-        long
+        searchParams{
+          q
+          page
+          pageSize
+          sorts{
+            id
+            desc
+          }
+          aggFilters{
+            field
+            values
+            gte
+            lte
+            includeMissingFields
+          }
+          crowdAggFilters{
+            field
+            values
+            gte
+            lte
+            includeMissingFields
+          }
+        }
       }
     }
     contributions

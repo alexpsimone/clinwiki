@@ -28,7 +28,7 @@ import ProfileScoreBoard from './components/ProfileScoreBoard';
 import ProfilePicture from './components/ProfilePicture';
 import ReviewsTable from './components/ReviewsTable';
 import ReactionsById from 'containers/StudyPage/components/ReactionsById';
-
+import AggCrumb from 'components/MultiCrumb/AggCrumb';
 interface EditProfilePageProps {
   user: UserFragment | null;
   history: History;
@@ -59,6 +59,7 @@ const EDIT_PROFILE_MUTATION = gql`
   }
   ${CurrentUser.fragment}
 `;
+
 
 const EditProfileMutationComponent = (
   props: MutationComponentOptions<
@@ -241,17 +242,20 @@ class EditProfilePage extends React.Component<
     this.setState({ currentDisplay: display });
   };
 
+  
   renderSearchLogs = () =>{
+    let searchNumber = 0
     return(
     <div >
-
-      {/* {
-      console.log(JSON.parse(this.props.user!.searchLogs![0]!.shortLink!.long|| ""))} */}
       <h2>Previous Searches:</h2>
       {/* {this.props.user!.searchLogs!.map(log =>(
-        <div id={log.id}>
-          {JSON.parse(log.shortLink.long|| "")}
-        </div>
+       Array.from(
+        
+        this.mkCrumbs(
+          log!.shortLink!.searchParams,
+          currentSiteView
+        )
+      )
       ))} */}
     </div>
   )
