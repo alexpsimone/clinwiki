@@ -53,6 +53,9 @@ import withTheme from 'containers/ThemeProvider';
 import SearchParamsContext from './components/SearchParamsContext';
 import RichTextEditor from 'react-rte';
 import { withPresentSite2 } from "../PresentSiteProvider/PresentSiteProvider";
+import Snackbar from '@material-ui/core/Snackbar';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 
 const ParamsQueryComponent = (
   props: QueryComponentOptions<
@@ -224,6 +227,7 @@ const changeFilter = (add: boolean) => (
 ) => (params: SearchParams) => {
   const propName = isCrowd ? 'crowdAggFilters' : 'aggFilters';
   const lens = lensPath([propName]);
+  console.log("bro")
   return (over(
     lens,
     //@ts-ignore
@@ -285,6 +289,7 @@ const addSearchTerm = (term: string) => (params: SearchParams) => {
 };
 
 const removeSearchTerm = (term: string) => (params: SearchParams) => {
+  console.log("remove")
   const children = reject(
     propEq('key', term),
     params.q.children || []
@@ -327,6 +332,7 @@ interface SearchPageState {
   removeSelectAll: boolean;
   totalRecords: number;
   collapseFacetBar: boolean;
+  snackBarVisible:boolean;
 }
 
 const DEFAULT_PARAMS: SearchParams = {
@@ -346,7 +352,8 @@ class SearchPage extends React.Component<SearchPageProps, SearchPageState> {
     searchCrowdAggs: {},
     removeSelectAll: false,
     totalRecords: 0,
-    collapseFacetBar:false
+    collapseFacetBar:false,
+    snackBarVisible:false
     };
 
   numberOfPages: number = 0;
@@ -471,6 +478,13 @@ class SearchPage extends React.Component<SearchPageProps, SearchPageState> {
     this.props.history.push(`/bulk?hash=${hash}&sv=${siteViewUrl}`);
   };
 
+  getSnackBar = () => {
+    this.setState(prevState =>({ snackBarVisible: true }));
+  };
+  handleSnackBarClose = () => {
+    this.setState(prevState =>({ snackBarVisible: false }));
+  }
+
   handleOpenAgg = (name: string, kind: AggKind) => {
     if (!this.state.openedAgg) {
       this.setState({ openedAgg: { name, kind } });
@@ -516,6 +530,7 @@ class SearchPage extends React.Component<SearchPageProps, SearchPageState> {
         updateParams={this.handleUpdateParams}
         removeSelectAll={this.state.removeSelectAll}
         resetSelectAll={this.resetSelectAll}
+        openSnackBar = {this.getSnackBar}
         // @ts-ignore
         opened={opened}
         openedKind={openedKind}
@@ -932,6 +947,23 @@ class SearchPage extends React.Component<SearchPageProps, SearchPageState> {
                     {showBreadCrumbs && this.renderCrumbs(presentSiteView)}
                     {showPresearch && this.renderPresearch(hash)}
                     {this.renderSearch()}
+                    <Snackbar
+                      open={this.state.snackBarVisible}
+                      message={"Filter Added"}
+                      anchorOrigin={{ vertical: 'bottom', horizontal: 'right'}}
+                      action={
+                        <React.Fragment>
+                          <IconButton
+                            aria-label="close"
+                            color="inherit"
+                            onClick={this.handleSnackBarClose}
+                          >
+                            <CloseIcon />
+                          </IconButton>
+                        </React.Fragment>
+                      }
+                    />
+                    
                   </ThemedMainContainer>
                 </ThemedSearchPageWrapper>
               );

@@ -33,7 +33,6 @@ interface FilterProps {
   handleFilterChange: any;
   showLabel: boolean;
 }
-
 class Filter extends React.Component<FilterProps> {
   render() {
     const {

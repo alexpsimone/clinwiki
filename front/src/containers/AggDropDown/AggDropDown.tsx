@@ -136,6 +136,7 @@ interface AggDropDownProps {
   client: ApolloClient<any>;
   site: PresentSiteFragment;
   presentSiteView: PresentSiteFragment_siteView;
+  openSnackBar: () => void;
 }
 
 class AggDropDown extends React.Component<AggDropDownProps, AggDropDownState> {
@@ -421,7 +422,7 @@ class AggDropDown extends React.Component<AggDropDownProps, AggDropDownState> {
     return (
       <Panel.Collapse className="bm-panel-collapse">
         <Panel.Body>
-          <Filter
+          <Filter           
             buckets={buckets}
             filter={filter}
             desc={desc}
@@ -439,6 +440,7 @@ class AggDropDown extends React.Component<AggDropDownProps, AggDropDownState> {
         </Panel.Body>
         <Panel.Body>
           <BucketsPanel
+            openSnackBar={this.props.openSnackBar}
             isPresearch={isPresearch}
             visibleOptions={visibleOptions}
             buckets={buckets}

@@ -65,6 +65,7 @@ interface AggsProps {
   onOpen: (agg: string, kind: AggKind) => void;
   removeSelectAll?: boolean;
   resetSelectAll?: () => void;
+  openSnackBar: () => void;
   updateParams: any;
   presearch?: boolean;
   presentSiteView: PresentSiteFragment_siteView;
@@ -155,6 +156,7 @@ class Aggs extends React.PureComponent<AggsProps> {
                     'crowdAggFilters'
                   ),
                 }}>
+                  {console.log(this.props.openSnackBar)}
                 <AggDropDown
                   key={k}
                   agg={k}
@@ -162,6 +164,7 @@ class Aggs extends React.PureComponent<AggsProps> {
                   buckets={preSearchCrowdAggs[k]}
                   isOpen={true}
                   aggKind="crowdAggs"
+                  openSnackBar = {this.props.openSnackBar}
                   addFilter={(agg, item) => addFilter(agg, item, true)}
                   addFilters={(agg, items) => addFilters(agg, items, true)}
                   removeFilter={(agg, item) =>
@@ -301,6 +304,7 @@ class Aggs extends React.PureComponent<AggsProps> {
                   <AggDropDown
                     key={k}
                     agg={k}
+                    openSnackBar = {this.props.openSnackBar}
                     selectedKeys={filters[k] || emptySet}
                     buckets={aggs[k]}
                     isOpen={

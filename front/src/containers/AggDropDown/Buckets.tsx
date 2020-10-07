@@ -14,6 +14,7 @@ interface BucketsProps {
   buckets: Array<AggBucket>;
   isSelected: any;
   updater: AggFilterInputUpdater;
+  openSnackBar?: () => void;
 }
 
 class Buckets extends React.Component<BucketsProps> {
@@ -27,6 +28,7 @@ class Buckets extends React.Component<BucketsProps> {
       )
       .map(bucket => (
         <Checkbox
+          onClick={()=>{this.props.openSnackBar? this.props.openSnackBar():console.log("no snackbar")}}
           key={bucket.key}
           checked={updater.isSelected(bucket.key)}
           onChange={() => updater.toggleFilter(bucket.key)}>

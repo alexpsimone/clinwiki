@@ -14,6 +14,7 @@ interface BucketsPanelProps {
   isSelected: any;
   hasMore: boolean;
   handleLoadMore: any;
+  openSnackBar?: () => void;
 }
 
 class BucketsPanel extends React.Component<BucketsPanelProps> {
@@ -39,6 +40,8 @@ class BucketsPanel extends React.Component<BucketsPanelProps> {
           </div>
         }>
         <Buckets
+          
+          openSnackBar = {this.props.openSnackBar}
           display={(field && field.display) || FieldDisplay.STRING}
           visibleOptions={visibleOptions}
           buckets={buckets}
