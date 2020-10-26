@@ -11,6 +11,7 @@ import { CardIcon, TableIcon } from './components/Icons';
 import { Helmet } from 'react-helmet';
 import { SortInput } from 'types/globalTypes';
 import { PresentSiteFragment_siteView } from 'types/PresentSiteFragment';
+
 import {
   map,
   pipe,
@@ -193,6 +194,7 @@ interface SearchView2Props {
   presentSiteView: PresentSiteFragment_siteView;
   getTotalResults: Function;
   theme: any;
+  updateResults: boolean;
 }
 
 interface SearchView2State {
@@ -398,7 +400,7 @@ class SearchView2 extends React.Component<SearchView2Props, SearchView2State> {
     error: any;
   }) => {
     const { presentSiteView } = this.props;
-
+    console.log('data', data)
     const showResults = presentSiteView.search.config.fields.showResults;
     let searchData = data?.search?.studies || [];
     const resultsType = presentSiteView.search.results.type;
@@ -436,7 +438,7 @@ class SearchView2 extends React.Component<SearchView2Props, SearchView2State> {
       )
     ) : (
       <div style={{ marginLeft: 'auto', display: 'flex', height: '100%' }}>
-        {this.renderViewDropdown()}
+        {/* {this.renderViewDropdown()} */}
       </div>
     );
   };
@@ -537,18 +539,21 @@ class SearchView2 extends React.Component<SearchView2Props, SearchView2State> {
         </Helmet>
         {/* <Col md={12}> */}
         <div style={{height: '100%'}}>
+          <ThemedSearchContainer>
+            {/* {this.renderViewDropdown()} */}
           <QueryComponent
             query={presentSiteView.search.config.fields.showResults ? QUERY : QUERY_NO_RESULTS}
             variables={this.props.params}
             >
             {({ data, loading, error }) => {
+              console.log('update Results', this.props.updateResults)
               return (
-                <ThemedSearchContainer>
-                  {this.renderSearch({ data, loading, error })}
-                </ThemedSearchContainer>
+                this.props.updateResults ?  this.renderSearch({ data, loading, error }) : <PulseLoader />
+            
               );
             }}
           </QueryComponent>
+          </ThemedSearchContainer>
           </div>
         {/* </Col> */}
       </SearchWrapper>

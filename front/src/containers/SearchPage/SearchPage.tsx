@@ -207,12 +207,6 @@ const changeFilter = (add: boolean) => (
   key: string,
   isCrowd?: boolean
 ) => (params: SearchParams) => {
-  console.log("REMOVe  Filter")
-
-  console.log("AggName", aggName)
-  console.log("key", key)
-  console.log("isCrowd", isCrowd)
-  console.log("params",params)
 
   const propName = isCrowd ? 'crowdAggFilters' : 'aggFilters';
   const lens = lensPath([propName]);
@@ -223,7 +217,6 @@ const changeFilter = (add: boolean) => (
      //console.log("AGGGGS", aggs)
       const index = findIndex(propEq('field', aggName), aggs);
       if (index === -1 && add) {
-        //console.log("HIT IF!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ")
         return [...aggs, { field: aggName, values: [key] }];
       }
       const aggLens = lensPath([index, 'values']);
@@ -321,6 +314,7 @@ interface SearchPageState {
   removeSelectAll: boolean;
   totalRecords: number;
   collapseFacetBar: boolean;
+  updateResults: boolean;
 }
 
 const DEFAULT_PARAMS: SearchParams = {
@@ -338,7 +332,8 @@ class SearchPage extends React.Component<SearchPageProps, SearchPageState> {
     openedAgg: null,
     removeSelectAll: false,
     totalRecords: 0,
-    collapseFacetBar:false
+    collapseFacetBar:false,
+    updateResults: false
     };
 
 
@@ -492,6 +487,8 @@ class SearchPage extends React.Component<SearchPageProps, SearchPageState> {
     );
   };
 
+
+
   renderSearch = () => {
     const hash = this.getHashFromLocation();
     const { presentSiteView } = this.props;
@@ -501,7 +498,7 @@ class SearchPage extends React.Component<SearchPageProps, SearchPageState> {
     };
     return (
       <ParamsQueryComponent
-        fetchPolicy={"network-only"}
+        fetchPolicy={"cache-and-network"}
         key={`${hash}+${JSON.stringify(this.state?.params)}`}
         query={SearchPageParamsQuery}
         variables={{ hash }}
@@ -510,12 +507,7 @@ class SearchPage extends React.Component<SearchPageProps, SearchPageState> {
         }}>
         {({ data, loading, error }) => {
           if (error || loading) return null;
-          // if(!hash && !loading){
-
-          //   this.updateSearchParams(DEFAULT_PARAMS)          
-          //   //Breaks when passing FILTERED_PARAMS
-          //   // this.updateSearchParams(FILTERED_PARAMS)          
-          // }
+   
 
           const params: SearchParams = this.searchParamsFromQuery(
             data!.searchParams,
@@ -526,19 +518,20 @@ class SearchPage extends React.Component<SearchPageProps, SearchPageState> {
             this.setState({ params });
             return null;
           }
-          return (
-            <SearchView2
-              key={`${hash}+${JSON.stringify(params)}`}
-              params={params}
-              onBulkUpdate={this.handleBulkUpdateClick}
-              onUpdateParams={this.handleUpdateParams}
-              onRowClick={this.handleRowClick}
-              searchHash={hash || ''}
-              searchParams={this.state.params}
-              presentSiteView={presentSiteView}
-              getTotalResults={this.getTotalResults}
-            />
-          );
+            return (
+              <SearchView2
+                 key={`${hash}+${JSON.stringify(params)}`}
+                 params={params}
+                 onBulkUpdate={this.handleBulkUpdateClick}
+                 onUpdateParams={this.handleUpdateParams}
+                 onRowClick={this.handleRowClick}
+                 searchHash={hash || ''}
+                 searchParams={this.state.params}
+                 presentSiteView={presentSiteView}
+                 getTotalResults={this.getTotalResults}
+                 updateResults={this.state.updateResults}
+               /> 
+             );      
         }}
       </ParamsQueryComponent>
     );
@@ -617,6 +610,7 @@ class SearchPage extends React.Component<SearchPageProps, SearchPageState> {
       params: {
         ...params,
        },
+       updateResults: false
      });
   }
 
@@ -812,6 +806,15 @@ class SearchPage extends React.Component<SearchPageProps, SearchPageState> {
       />
     );
   };
+
+  componentDidUpdate(prevProps, prevState,){
+    if (prevState.params != this.state.params) {
+      this.setState({
+        updateResults: true
+      })
+    }
+  }
+
 
   render() {
     const { totalRecords, collapseFacetBar } = this.state;
