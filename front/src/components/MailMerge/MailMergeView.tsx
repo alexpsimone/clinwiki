@@ -3,18 +3,13 @@ import Handlebars from 'handlebars';
 import useHandlebars from 'hooks/useHandlebars';
 import marked from 'marked';
 import HtmlToReact from 'html-to-react';
-
-export type IslandConstructor = (
-  attributes: Record<string, string>,
-  context?: object,
-  parent?: any
-) => JSX.Element;
+import { IslandCollection } from './MailMergeIslands';
 
 export interface Props {
   template: string;
   context?: object;
   style?: object;
-  islands?: Record<string, IslandConstructor>;
+  islands?: IslandCollection
 }
 const defaultStyle: React.CSSProperties = {
   display: 'flex',
@@ -77,12 +72,12 @@ export default function MailMergeView(props: Props) {
     {
       shouldProcessNode: node => islandKeys.has(node.name),
       processNode: (node, children) => {
-        const create = props.islands?.[node.name];
+        const island = props.islands?.[node.name];
         return (
           <div
             className="mail-merge-island"
             key={node.attribs['key'] || node.name}>
-            {create?.(node.attribs, props.context, children)}
+            {island?.construct?.(node.attribs, props.context, children)}
           </div>
         );
       },

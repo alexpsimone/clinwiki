@@ -11,6 +11,7 @@ import { FormControl, DropdownButton, MenuItem } from 'react-bootstrap';
 import { getStudyQuery, getSearchQuery } from './MailMergeUtils';
 import { commonIslands } from 'containers/Islands/CommonIslands';
 import { useFragment } from './MailMergeFragment';
+import { makeIsland } from './MailMergeIslands';
 
 type Mode = 'Study' | 'Search';
 
@@ -71,8 +72,17 @@ export default function TestComponent() {
     gql(getIntrospectionQuery({ descriptions: false }))
   );
 
+  const islands = {
+    ...commonIslands,
+    groot: makeIsland( (attributes: Record<string, string>) => {
+      return (
+        <img src="https://media.giphy.com/media/11vDNL1PrUUo0/source.gif" />
+      );
+    }),
+  };
+
   const schemaType = getClassForMode(mode);
-  const [fragmentName, fragment] = useFragment(schemaType, template);
+  const [fragmentName, fragment] = useFragment(schemaType, template, islands);
   const [query, variables] = getModeData(mode, nctOrSearchHash, fragment, fragmentName);
   const { data } = useQuery(query, { variables });
 
@@ -82,14 +92,6 @@ export default function TestComponent() {
     if (mode === 'Search') setNctOrSearchHash(defaultSearchHash);
   };
 
-  const islands = {
-    ...commonIslands,
-    groot: (attributes: Record<string, string>) => {
-      return (
-        <img src="https://media.giphy.com/media/11vDNL1PrUUo0/source.gif" />
-      );
-    },
-  };
 
   const sampleData = data?.study || data?.search?.studies?.[0];
 

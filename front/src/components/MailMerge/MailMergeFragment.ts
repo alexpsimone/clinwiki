@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { IslandCollection } from './MailMergeIslands';
 
 function mustacheTokens(input: string) {
   let tokens: string[] = [];
@@ -147,7 +148,7 @@ function randomIdentifier() {
   return Array.from({ length: 12 }, randomChar).join('');
 }
 
-export function useFragment(className : string, template : string) {
+export function useFragment(className : string, template : string, islands : IslandCollection) {
   const [fragmentName, _] = useState<string>(randomIdentifier());
   return useMemo(
     () => [fragmentName, compileFragment(fragmentName, className, template)],

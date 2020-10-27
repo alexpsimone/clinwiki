@@ -43,7 +43,7 @@ export default function GenericPage(props: Props) {
   const { data: pageViewsData } = usePageViews(site?.id);
   const { data: pageViewData } = usePageView(defaultPage());
   const currentPage = pageViewData?.site?.pageView;
-  const [ fragmentName, fragment ] = useFragment('Study', currentPage?.template || '');
+  const [ fragmentName, fragment ] = useFragment('Study', currentPage?.template || '', studyIslands);
   const { data: studyData, loading } = useQuery(
     getStudyQuery(fragmentName, fragment),
     {
