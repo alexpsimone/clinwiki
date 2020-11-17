@@ -200,7 +200,7 @@ class Aggs extends React.PureComponent<AggsProps> {
         <QueryComponent
           query={QUERY}
           variables={searchParams}
-          fetchPolicy={'no-cache'}
+          //fetchPolicy={'no-cache'}
         >
           {({ data, loading, error }) => {
 
