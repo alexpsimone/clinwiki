@@ -303,17 +303,38 @@ class AggDropDown extends React.Component<AggDropDownProps, AggDropDownState> {
       returnAll,
     } = this.props;
     const [query] =
-      this.props.aggKind === 'crowdAggs'
-        ? [SearchPageCrowdAggBucketsQuery, 'crowdAggFilters']
-        : [SearchPageAggBucketsQuery, 'aggFilters'];
-
+    this.props.aggKind === 'crowdAggs'
+    ? [SearchPageCrowdAggBucketsQuery, 'crowdAggFilters']
+    : [SearchPageAggBucketsQuery, 'aggFilters'];
+    
     let aggSort = this.handleSort(desc, sortKind);
+    
+    const returnAllHelper = (returnAll) => {
+      const {
+        agg,
+        presentSiteView,
+        presearch,       
+      } = this.props;
+      
+      const field = findFields(agg, presentSiteView, presearch);
+      
+      if (field?.display === FieldDisplay.DROP_DOWN ||
+        field?.display === FieldDisplay.LESS_THAN_DROP_DOWN ||
+        field?.display === FieldDisplay.GREATER_THAN_DROP_DOWN){
+          return true
+        }
+        else 
+        return returnAll;
+      }
+      
+    console.log("🚀 ~ file: AggDropDown.tsx ~ line 305 ~ AggDropDown ~ handleLoadMore= ~ returnAll", returnAll);
+    console.log("🚀 ~ file: AggDropDown.tsx ~ line 329 ~ AggDropDown ~ returnAllHelper ~ returnAllHelper", returnAllHelper);
 
     const variables = {
       ...searchParams,
       url: presentSiteView.url,
       configType: configType,
-      returnAll: returnAll,
+      returnAll: returnAllHelper(returnAll),
       aggFilters: maskAgg(searchParams.aggFilters, this.props.agg),
       crowdAggFilters: maskAgg(
         this.props.searchParams.crowdAggFilters,
