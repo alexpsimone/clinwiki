@@ -267,6 +267,7 @@ class SearchService
         body = create_nested_agg_body( body, top_key, field)
       end
 
+      puts("RETURN ALL*************************#{return_all}")
       visibile_options = find_visibile_options(key, is_crowd_agg, current_site, url, config_type, return_all)
       visible_options_regex = one_of_regex(visibile_options)
       regex = visible_options_regex

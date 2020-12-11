@@ -293,6 +293,7 @@ class AggDropDown extends React.Component<AggDropDownProps, AggDropDownState> {
   };
 
   handleLoadMore = async () => {
+    console.log("Loading More!!!!!!!!!!!!!!!")
     const { client: apolloClient } = this.props;
     const { desc, sortKind, buckets, filter } = this.state;
     const {
@@ -301,6 +302,7 @@ class AggDropDown extends React.Component<AggDropDownProps, AggDropDownState> {
       presentSiteView,
       configType,
       returnAll,
+      presearch
     } = this.props;
     const [query] =
     this.props.aggKind === 'crowdAggs'
@@ -310,25 +312,20 @@ class AggDropDown extends React.Component<AggDropDownProps, AggDropDownState> {
     let aggSort = this.handleSort(desc, sortKind);
     
     const returnAllHelper = (returnAll) => {
-      const {
-        agg,
-        presentSiteView,
-        presearch,       
-      } = this.props;
       
       const field = findFields(agg, presentSiteView, presearch);
       
       if (field?.display === FieldDisplay.DROP_DOWN ||
         field?.display === FieldDisplay.LESS_THAN_DROP_DOWN ||
         field?.display === FieldDisplay.GREATER_THAN_DROP_DOWN){
+          console.log("FIELD", field?.display)
           return true
         }
-        else 
         return returnAll;
       }
       
-    console.log("🚀 ~ file: AggDropDown.tsx ~ line 305 ~ AggDropDown ~ handleLoadMore= ~ returnAll", returnAll);
-    console.log("🚀 ~ file: AggDropDown.tsx ~ line 329 ~ AggDropDown ~ returnAllHelper ~ returnAllHelper", returnAllHelper);
+    console.log("🚀  returnAll", returnAll);
+    console.log("🚀  returnAllHelper", returnAllHelper(returnAll));
 
     const variables = {
       ...searchParams,
@@ -346,6 +343,9 @@ class AggDropDown extends React.Component<AggDropDownProps, AggDropDownState> {
       aggOptionsFilter: filter,
       aggOptionsSort: aggSort,
     };
+
+    console.log("🚀 ~ file: AggDropDown.tsx ~ line 331 ~ AggDropDown ~ handleLoadMore= ~ variables", variables);
+
 
     const response = await apolloClient.query({
       query,
