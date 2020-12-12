@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory, useLocation, useRouteMatch } from 'react-router-dom';
-import useUrlParams, { queryStringAll } from 'utils/UrlParamsProvider';
+import getUrlParams, { queryStringAll } from 'utils/UrlParamsProvider';
 import { WikiPageQuery } from 'types/WikiPageQuery';
 import RichTextEditor, { EditorValue } from 'react-rte';
 import { Panel, FormControl } from 'react-bootstrap';
@@ -20,7 +20,7 @@ export default function WikiPageEditor(props: Props) {
   });
   let history = useHistory();
   let match = useRouteMatch();
-  const params = useUrlParams();
+  const params = getUrlParams();
 
   const [plainEditorText, setplainEditorText] = useState('');
   const [richEditorText, setRichEditorText] = useState('');

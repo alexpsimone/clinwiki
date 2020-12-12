@@ -53,7 +53,7 @@ import withTheme from 'containers/ThemeProvider';
 import SearchParamsContext from './components/SearchParamsContext';
 import RichTextEditor from 'react-rte';
 import { withPresentSite2 } from "../PresentSiteProvider/PresentSiteProvider";
-import useUrlParams, { queryStringAll } from 'utils/UrlParamsProvider';
+import getUrlParams, { queryStringAll } from 'utils/UrlParamsProvider';
 
 const ParamsQueryComponent = (
   props: QueryComponentOptions<
@@ -441,7 +441,7 @@ class SearchPage extends React.Component<SearchPageProps, SearchPageState> {
   };
 
   handleRowClick = (nctId: string) => {
-    let querystringParams = useUrlParams()
+    let querystringParams = getUrlParams()
     const suffix =
       this.isWorkflow() ? '/workflow' : '';
     this.props.history.push(

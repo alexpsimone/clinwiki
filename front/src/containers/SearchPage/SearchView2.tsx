@@ -41,7 +41,7 @@ import {
   AutoSizer,
 } from 'react-virtualized';
 import aggToField from 'utils/aggs/aggToField';
-import useUrlParams from '../../utils/UrlParamsProvider';
+import getUrlParams from '../../utils/UrlParamsProvider';
 import { AggBucketMap } from './Types';
 
 const QUERY = gql`
@@ -216,7 +216,7 @@ class SearchView2 extends React.Component<SearchView2Props, SearchView2State> {
     const buttonsArray = presentSiteView.search.results.buttons.items.filter(
       button => button.target.length > 0 && button.icon.length > 0
     );
-    const queryString = useUrlParams();
+    const queryString = getUrlParams();
     return (
       <PresentSiteProvider>
         {presentSiteView => {

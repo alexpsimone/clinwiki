@@ -8,7 +8,7 @@ import styled from 'styled-components';
 import QUERY from 'queries/ReviewPageQuery';
 import { useQuery, useMutation } from 'react-apollo';
 import { useCurrentUser } from 'containers/CurrentUser/CurrentUser';
-import useUrlParams, { queryStringAll } from 'utils/UrlParamsProvider';
+import getUrlParams, { queryStringAll } from 'utils/UrlParamsProvider';
 import { BeatLoader } from 'react-spinners';
 import { Switch, Route } from 'react-router-dom';
 import { useHistory, useLocation, useRouteMatch } from 'react-router-dom';
@@ -53,7 +53,7 @@ export default function ReviewsIsland(props: Props) {
   const location = useLocation();
   const match = useRouteMatch();
   const theme = useTheme();
-  const params = useUrlParams();
+  const params = getUrlParams();
   // TODO: This query should be pushed up as a fragment to the Page
   const { data: reviewData } = useQuery<ReviewPageQuery>(QUERY, {
     variables: { nctId },

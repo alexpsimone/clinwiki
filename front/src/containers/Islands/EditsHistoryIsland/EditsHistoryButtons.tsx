@@ -4,7 +4,7 @@ import * as FontAwesome from 'react-fontawesome';
 import { partition, toPairs, map } from 'ramda';
 
 import { trimPath } from 'utils/helpers';
-import useUrlParams, { queryStringAll } from 'utils/UrlParamsProvider';
+import getUrlParams, { queryStringAll } from 'utils/UrlParamsProvider';
 import ThemedButton from 'components/StyledComponents/index';
 import EditsExpansionContext from 'components/Edits/EditsExpansionContext';
 
@@ -48,7 +48,7 @@ const ExpandHistoryButtons = () => {
 const HistoryToggleButton = () => {
   let match = useRouteMatch();
   let history = useHistory();
-  const params = useUrlParams();
+  const params = getUrlParams();
   const studyPath = trimPath(match.url);
 
   const goToEditHistoryUrl = () => {

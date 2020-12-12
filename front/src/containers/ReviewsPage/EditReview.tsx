@@ -8,7 +8,7 @@ import {
 import { match } from 'react-router-dom';
 import { find, propEq, pipe, split, dropLast, join } from 'ramda';
 import ReviewForm from 'containers/ReviewForm';
-import useUrlParams,{queryStringAll} from 'utils/UrlParamsProvider';
+import getUrlParams,{queryStringAll} from 'utils/UrlParamsProvider';
 import { ReviewsPageFragment } from 'types/ReviewsPageFragment';
 import { History } from 'history';
 import StudySummary from 'components/StudySummary';
@@ -56,7 +56,7 @@ class EditReview extends React.PureComponent<EditReviewProps> {
   };
 
   handleCloseReview = () => {
-    const params = useUrlParams()
+    const params = getUrlParams()
     this.props.history.push(`${trimPath(this.props.match.url)}${queryStringAll(params)}`);
   };
   render() {

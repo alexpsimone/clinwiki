@@ -1,5 +1,5 @@
 import Handlebars from 'handlebars';
-import useUrlParams, { queryStringAll } from 'utils/UrlParamsProvider';
+import getUrlParams, { queryStringAll } from 'utils/UrlParamsProvider';
 import { link } from 'fs';
 
 export function registerHandlebarsHelpers() {
@@ -22,7 +22,7 @@ export function registerHandlebarsHelpers() {
     }
   });
   Handlebars.registerHelper('querystring', (value: string) => {
-    const linkAttributes =  useUrlParams()
+    const linkAttributes =  getUrlParams()
     switch (value) {
       case 'hash':
         return linkAttributes.hash;

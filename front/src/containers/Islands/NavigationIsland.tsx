@@ -8,7 +8,7 @@ import { BeatLoader, PulseLoader } from 'react-spinners';
 import StudyPageCounter from '../StudyPage/components/StudyPageCounter'
 import { path, pathOr } from 'ramda';
 import { trimPath } from 'utils/helpers';
-import useUrlParams, {queryStringAll} from 'utils/UrlParamsProvider';
+import getUrlParams, {queryStringAll} from 'utils/UrlParamsProvider';
 
 
 interface Props {
@@ -20,7 +20,7 @@ export default function NavigationIsland(props: Props) {
   let history = useHistory();
   let match = useRouteMatch();
 
-  const params = useUrlParams()
+  const params = getUrlParams()
   const hash = params.hash
   const siteViewUrl = params.sv
   const variables = {

@@ -9,7 +9,7 @@ import { useQuery } from 'react-apollo';
 import { getStudyQuery } from 'components/MailMerge/MailMergeUtils';
 import { BeatLoader } from 'react-spinners';
 import { studyIslands } from 'containers/Islands/CommonIslands'
-import useUrlParams from 'utils/UrlParamsProvider';
+import getUrlParams from 'utils/UrlParamsProvider';
 import { find, propEq } from 'ramda';
 import {usePresentSite} from "../PresentSiteProvider/PresentSiteProvider";
 import { useFragment } from 'components/MailMerge/MailMergeFragment';
@@ -38,7 +38,7 @@ export default function GenericPage(props: Props) {
     }
   }
   // When we add more page types we need to refactor this a little bit and pull out the query/nctid
-  const params = useUrlParams();
+  const params = getUrlParams();
   const { site } = usePresentSite({ url: params.sv});
   const { data: pageViewsData } = usePageViews(site?.id);
   const { data: pageViewData } = usePageView(defaultPage());

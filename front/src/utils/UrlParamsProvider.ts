@@ -1,4 +1,4 @@
-export default function useUrlParams() {
+export default function getUrlParams() {
   return {
     hash: new URLSearchParams(window.location.search)
       .getAll('hash')

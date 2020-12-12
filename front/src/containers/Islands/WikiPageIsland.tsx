@@ -8,7 +8,7 @@ import { Panel, FormControl } from 'react-bootstrap';
 import QUERY from 'queries/WikiPageQuery';
 import { useQuery, useMutation } from 'react-apollo';
 import CurrentUser, { useCurrentUser, QUERY as UserQuery } from 'containers/CurrentUser/CurrentUser';
-import useUrlParams, { queryStringAll } from 'utils/UrlParamsProvider';
+import getUrlParams, { queryStringAll } from 'utils/UrlParamsProvider';
 import { useHistory, useLocation, useRouteMatch, Prompt } from 'react-router-dom';
 import { BeatLoader } from 'react-spinners';
 import { Switch, Route } from 'react-router';
@@ -47,7 +47,7 @@ export default function WikiPageIsland(props: Props) {
   const [flashAnimation, setFlashAnimation] = useState(false);
   // const user = useCurrentUser()?.data?.me;
   const {data:user, refetch }= useQuery<CurrentUserQuery>(UserQuery)
-  const params = useUrlParams();
+  const params = getUrlParams();
   // TODO: This query should be pushed up as a fragment to the Page
   const { data: studyData } = useQuery<WikiPageQuery>(QUERY, {
     variables: { nctId },
