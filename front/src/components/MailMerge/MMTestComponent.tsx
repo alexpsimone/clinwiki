@@ -9,9 +9,13 @@ import { gql } from 'apollo-boost';
 import MailMerge from './MailMerge';
 import { FormControl, DropdownButton, MenuItem } from 'react-bootstrap';
 import { getStudyQuery, getSearchQuery } from './MailMergeUtils';
-import { commonIslands } from 'containers/Islands/CommonIslands';
-import { useFragment } from './MailMergeFragment';
-import { makeIsland } from './MailMergeIslands';
+import {
+  commonIslands,
+  NCTID,
+  studyIslands,
+} from 'containers/Islands/CommonIslands';
+import { fragmentFromString, useFragment } from './MailMergeFragment';
+import { IslandCollection, makeIsland } from './MailMergeIslands';
 
 type Mode = 'Study' | 'Search';
 
@@ -72,18 +76,34 @@ export default function TestComponent() {
     gql(getIntrospectionQuery({ descriptions: false }))
   );
 
-  const islands = {
-    ...commonIslands,
-    groot: makeIsland( (attributes: Record<string, string>) => {
-      return (
-        <img src="https://media.giphy.com/media/11vDNL1PrUUo0/source.gif" />
-      );
-    }),
+  // todo: Will this generate from the fragment above?
+  interface UserFirstLast {
+    firstName: string;
+    lastName: string;
+  }
+  const whoamiIsland = makeIsland<UserFirstLast>(
+    ({ context }) => {
+      return <span>{(context.lastName, context.firstName)}</span>;
+    },
+    fragmentFromString(`fragment UserNameFragment on User { firstName lastName }`)
+  );
+
+  const islands: IslandCollection<NCTID & UserFirstLast> = {
+    ...studyIslands,
+    groot: makeIsland(() => (
+      <img src="https://media.giphy.com/media/11vDNL1PrUUo0/source.gif" />
+    )),
+    whoami: whoamiIsland,
   };
 
   const schemaType = getClassForMode(mode);
   const [fragmentName, fragment] = useFragment(schemaType, template, islands);
-  const [query, variables] = getModeData(mode, nctOrSearchHash, fragment, fragmentName);
+  const [query, variables] = getModeData(
+    mode,
+    nctOrSearchHash,
+    fragment,
+    fragmentName
+  );
   const { data } = useQuery(query, { variables });
 
   const updateMode = mode => {
@@ -91,9 +111,6 @@ export default function TestComponent() {
     if (mode === 'Study') setNctOrSearchHash(defaultNctId);
     if (mode === 'Search') setNctOrSearchHash(defaultSearchHash);
   };
-
-
-  const sampleData = data?.study || data?.search?.studies?.[0];
 
   if (introspection) {
     const types = introspection.__schema.types;

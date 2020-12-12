@@ -15,7 +15,7 @@ import { IslandCollection, makeIsland } from 'components/MailMerge/MailMergeIsla
 */
 
 export const commonIslands = {
-  expander: makeIsland((attributes: Record<string, string>, context, children) => {
+  expander: makeIsland<unknown,never>(({attributes, children}) => {
     return (
       <CollapsiblePanel
         header={attributes['header'] || 'header'}
@@ -26,30 +26,32 @@ export const commonIslands = {
   }),
 };
 
-export const studyIslands: IslandCollection = {
+export interface NCTID { nctId : string }
+
+export const studyIslands : IslandCollection<NCTID,never> = {
   ...commonIslands,
-  workflow: makeIsland((attributes: Record<string, string>, context?: any) => (
+  workflow: makeIsland(({attributes, context}) => (
     <WorkflowIsland name={attributes['name']} nctId={context?.nctId} />
   )),
-  facility: makeIsland((attributes: Record<string, string>, context?: any) => (
+  facility: makeIsland(({context}) => (
     <FacilityIsland nctId={context?.nctId} />
   )),
-  wikipage: makeIsland((attributes: Record<string, string>, context?: any) => (
-    <WikiPageIsland nctId={context?.nctId} />
+  wikipage: makeIsland(({context}) => (
+    <WikiPageIsland nctId={context.nctId} />
   )),
-  navigation: makeIsland((attributes: Record<string, string>, context?: any) => (
-    <NavigationIsland nctId={context?.nctId} />
+  navigation: makeIsland(({context}) => (
+    <NavigationIsland nctId={context.nctId} />
   )),
-  editshistory: makeIsland((attributes: Record<string, string>, context?: any) => (
+  editshistory: makeIsland(({context}) => (
     <EditsHistoryIsland nctId={context?.nctId} />
   )),
-  back: makeIsland((attributes: Record<string, string>, context?: any) => (
+  back: makeIsland(({context}) => (
     <BackIsland nctId={context?.nctId} />
   )),
-  reactions: makeIsland((attributes: Record<string, string>, context?: any) => (
+  reactions: makeIsland(({context}) => (
     <ReactionsIsland nctId={context?.nctId} />
   )),
-  reviews: makeIsland((attributes: Record<string, string>, context?: any) => (
+  reviews: makeIsland(({context}) => (
     <ReviewsIsland nctId={context?.nctId} />
   )),
 };

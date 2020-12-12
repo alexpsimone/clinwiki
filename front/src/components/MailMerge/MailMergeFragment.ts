@@ -1,5 +1,10 @@
+import { gql } from 'apollo-boost';
+import { DocumentNode } from 'graphql';
 import { useMemo, useState } from 'react';
 import { IslandCollection } from './MailMergeIslands';
+
+export type FragmentName = string;
+export type Fragment = { queryType: string; fragment: DocumentNode };
 
 function mustacheTokens(input: string) {
   let tokens: string[] = [];
@@ -131,6 +136,19 @@ function toFragment(name: string, className: string, body: string) {
   }
 }
 
+// See tests for use
+export function fragmentFromString(fragment: string) {
+  const regexp = /fragment ([^ ]*) on ([^ ]*)/g;
+  const matches = [...fragment.matchAll(regexp)];
+  const [_, fragmentName, queryType] = matches[0];
+  return {
+    [fragmentName]: {
+      queryType,
+      fragment: gql(fragment),
+    },
+  };
+}
+
 export function compileFragment(
   fragmentName: string,
   className: string,
@@ -143,15 +161,20 @@ export function compileFragment(
 }
 
 function randomIdentifier() {
-  const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_'
-  const randomChar = () => chars[Math.floor((Math.random()*chars.length))]
+  const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_';
+  const randomChar = () => chars[Math.floor(Math.random() * chars.length)];
   return Array.from({ length: 12 }, randomChar).join('');
 }
 
-export function useFragment(className : string, template : string, islands : IslandCollection) {
+export function useFragment(
+  className: string,
+  template: string,
+  islands: IslandCollection
+): Record<string, Fragment> {
   const [fragmentName, _] = useState<string>(randomIdentifier());
-  return useMemo(
-    () => [fragmentName, compileFragment(fragmentName, className, template)],
-    [fragmentName, className, template]
-  );
+  return useMemo(() => {
+    // [fragmentName, compileFragment(fragmentName, className, template)],
+    // compileFragment + merge with *Used* island fragments
+    return {};
+  }, [fragmentName, className, template, islands]);
 }
