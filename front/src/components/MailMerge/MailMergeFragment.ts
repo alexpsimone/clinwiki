@@ -1,10 +1,11 @@
 import { gql } from 'apollo-boost';
 import { DocumentNode } from 'graphql';
 import { useMemo, useState } from 'react';
-import { IslandCollection } from './MailMergeIslands';
+import { Island, IslandCollection } from './MailMergeIslands';
 
 export type FragmentName = string;
 export type Fragment = { queryType: string; fragment: DocumentNode };
+export type FragmentCollection = Record<FragmentName, Fragment>;
 
 function mustacheTokens(input: string) {
   let tokens: string[] = [];
@@ -128,16 +129,7 @@ function jsonToFragmentBody(
   return result;
 }
 
-function toFragment(name: string, className: string, body: string) {
-  if (body) {
-    return `fragment ${name} on ${className} ${body}`;
-  } else {
-    return '';
-  }
-}
-
-// See tests for use
-export function fragmentFromString(fragment: string) {
+export function fragmentFromString(fragment: string): FragmentCollection {
   const regexp = /fragment ([^ ]*) on ([^ ]*)/g;
   const matches = [...fragment.matchAll(regexp)];
   const [_, fragmentName, queryType] = matches[0];
@@ -149,15 +141,78 @@ export function fragmentFromString(fragment: string) {
   };
 }
 
-export function compileFragment(
+export function fragmentFromGql(fragment: DocumentNode): FragmentCollection {
+  const results: FragmentCollection = {};
+  for (const def of fragment.definitions) {
+    if (def.kind == 'FragmentDefinition') {
+      const name = def.name;
+      const queryType = def.typeCondition.name;
+      results[name.value] = {
+        queryType: queryType.value,
+        fragment: fragment,
+      };
+    }
+  }
+  return results;
+}
+
+export function getUsedIslands(
+  template: string,
+  islands: IslandCollection
+): IslandCollection {
+  const re = /<([A-Z][a-z]*)/g;
+  const matches = [...template.matchAll(re)];
+  const result: IslandCollection = {};
+  for (const m of matches) {
+    const [_, islandName] = m;
+    if (islandName in islands) {
+      result[islandName] = islands[islandName];
+    }
+  }
+  return result;
+}
+
+function toFragment(
+  name: string,
+  className: string,
+  body: string
+): FragmentCollection {
+  if (body) {
+    const fragment = gql`fragment ${name} on ${className} { ${body} }`;
+    return {
+      [name]: {
+        queryType: className,
+        fragment: fragment,
+      },
+    };
+  } else {
+    return {};
+  }
+}
+
+// Exported for test
+export function fragmentsFromMMTemplate(
   fragmentName: string,
   className: string,
-  template: string
-) {
+  template: string,
+  islands: IslandCollection
+): FragmentCollection {
   const tokens = mustacheTokens(template);
   const json = tokensToGraphQLOb(tokens);
   const fragmentBody = jsonToFragmentBody(json);
-  return toFragment(fragmentName, className, fragmentBody);
+  const usedIslands = getUsedIslands(template, islands);
+  var res = toFragment(fragmentName, className, fragmentBody);
+  for (const key in usedIslands) {
+    const i = usedIslands[key];
+    if (i.fragments) {
+      for (const key in i.fragments) {
+        if (!(key in res)) {
+          res[key] = i.fragments[key];
+        }
+      }
+    }
+  }
+  return res;
 }
 
 function randomIdentifier() {
@@ -173,8 +228,6 @@ export function useFragment(
 ): Record<string, Fragment> {
   const [fragmentName, _] = useState<string>(randomIdentifier());
   return useMemo(() => {
-    // [fragmentName, compileFragment(fragmentName, className, template)],
-    // compileFragment + merge with *Used* island fragments
-    return {};
+    return fragmentsFromMMTemplate(fragmentName, className, template, islands);
   }, [fragmentName, className, template, islands]);
 }

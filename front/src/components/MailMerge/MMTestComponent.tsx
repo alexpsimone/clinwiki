@@ -76,7 +76,6 @@ export default function TestComponent() {
     gql(getIntrospectionQuery({ descriptions: false }))
   );
 
-  // todo: Will this generate from the fragment above?
   interface UserFirstLast {
     firstName: string;
     lastName: string;
