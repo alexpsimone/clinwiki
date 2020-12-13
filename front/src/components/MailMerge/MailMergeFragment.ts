@@ -178,11 +178,10 @@ function toFragment(
   body: string
 ): FragmentCollection {
   if (body) {
-    const fragment = gql`fragment ${name} on ${className} { ${body} }`;
     return {
       [name]: {
         queryType: className,
-        fragment: fragment,
+        fragment: gql`fragment ${name} on ${className} ${body}`,
       },
     };
   } else {
@@ -190,7 +189,7 @@ function toFragment(
   }
 }
 
-// Exported for test
+// Exported for test only
 export function fragmentsFromMMTemplate(
   fragmentName: string,
   className: string,
