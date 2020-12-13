@@ -71,12 +71,18 @@ it('fragmentsFromMMTemplate1', () => {
     fragment UserNameFragment on User {
       firstName
       lastName
-    }
-  `);
+    }`);
+
+  const otherFragment = fragmentFromString(`
+    fragment UnusedFragment on Hobit {
+      hairy
+      toes
+    }`);
   const islands: IslandCollection = {
-    Apple: makeIsland(() => dummyObj),
-    Banana: makeIsland(() => dummyObj),
-    Pear: makeIsland(() => dummyObj),
+    Apple: makeIsland(() => dummyObj, otherFragment),
+    Banana: makeIsland(() => dummyObj, usernameFragment),
+    Pear: makeIsland(() => dummyObj, otherFragment),
+    Pineapple: makeIsland(() => dummyObj),
     Whoami: makeIsland(() => dummyObj, usernameFragment),
   };
 
@@ -85,6 +91,7 @@ it('fragmentsFromMMTemplate1', () => {
     <div>
       {{shortDescription}}
       <Banana ripe=true></Banana>
+      <Pineapple>Not on pizza</Pineapple>
     </div>
     <Expander header='logged in as'><Whoami></Expander> `;
 
@@ -94,7 +101,11 @@ it('fragmentsFromMMTemplate1', () => {
     template,
     islands
   );
-  // console.log(fragment);
+  
+
+  // The fragment generate from the template and 
+  // the usernameFragment should be included but only once
+  // The otherFragment should *not* be included
   const expectedResult = {
     ...usernameFragment,
     AnonymousFragment: {
@@ -108,10 +119,8 @@ it('fragmentsFromMMTemplate1', () => {
       `,
     },
   };
-  // console.log(expectedResult);
 
-  expect(fragment['AnonymousFragment']).toEqual(expectedResult['AnonymousFragment']);
-  // expect(fragment['AnonymousFragment']).toEqual(expectedResult['AnonymousFragment']);
+  expect(fragment).toEqual(expectedResult);
 });
 
 // it('compileQueryFromFragments', () => {
