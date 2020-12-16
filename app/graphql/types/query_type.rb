@@ -104,7 +104,7 @@ module Types
       search_service.search
     end
 
-    
+
     def build_name_default(search_info)
       result = ""
       rDescription = ""
@@ -175,7 +175,7 @@ module Types
     def agg_buckets(search_hash: nil, params: nil, url: nil, config_type: nil, return_all: nil)
       params = fetch_and_merge_search_params(search_hash: search_hash, params: params)
       #params = "{ :page=>#{params[:page]}, :page_size=>#{params[:page_size]}, :agg=>'#{params[:agg]}'}"   if return_all == true 
-      if return_all = true 
+      if return_all == true 
         hash = {}
         hash [:page ] = params[:page] if params[:page].present?
         hash [:page_size ] = params[:page_size] if params[:page_size].present?
@@ -192,7 +192,7 @@ module Types
     def crowd_agg_buckets(search_hash: nil, params: nil, url: nil, config_type: nil, return_all: nil)
       params = fetch_and_merge_search_params(search_hash: search_hash, params: params)
       #params = {:agg=>"#{params[:agg]}" } if return_all == true 
-      if return_all = true 
+      if return_all == true 
         hash = {}
         hash [:page ] = params[:page] if params[:page].present?
         hash [:page_size ] = params[:page_size] if params[:page_size].present?

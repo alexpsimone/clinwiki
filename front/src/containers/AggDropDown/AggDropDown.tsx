@@ -315,7 +315,7 @@ class AggDropDown extends React.Component<AggDropDownProps, AggDropDownState> {
       
       const field = findFields(agg, presentSiteView, presearch);
       
-      if (field?.display === FieldDisplay.DROP_DOWN ||
+      if (//field?.display === FieldDisplay.DROP_DOWN ||
         field?.display === FieldDisplay.LESS_THAN_DROP_DOWN ||
         field?.display === FieldDisplay.GREATER_THAN_DROP_DOWN){
           console.log("FIELD", field?.display)
