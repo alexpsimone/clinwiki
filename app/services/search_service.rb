@@ -239,6 +239,7 @@ class SearchService
     options[:per_page] = 0
     options[:smart_aggs] = true
     options[:load] = false
+    
 
     page = params.fetch(:page, 0)
     page_size = params.fetch(:page_size, DEFAULT_PAGE_SIZE)
@@ -266,8 +267,7 @@ class SearchService
       if top_key
         body = create_nested_agg_body( body, top_key, field)
       end
-
-      puts("RETURN ALL*************************#{return_all}")
+      
       visibile_options = find_visibile_options(key, is_crowd_agg, current_site, url, config_type, return_all)
       visible_options_regex = one_of_regex(visibile_options)
       regex = visible_options_regex
@@ -281,7 +281,6 @@ class SearchService
       body[:aggs][key][:aggs][key][:terms][:include] = regex if regex.present?
       end
     end
-
     aggs = search_results.aggs.to_h.deep_symbolize_keys
     if field.include? "."
       nested_result_aggs(field, aggs)
