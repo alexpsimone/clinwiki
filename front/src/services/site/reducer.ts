@@ -17,7 +17,7 @@ const initialState: types.SiteState = {
     siteProvider: undefined,
     isFetchingPresentSiteProvider: false,
     presentSiteProvider: undefined,
-};
+}
 
 const siteReducer = ( state = initialState, action: types.SiteActionTypes) : types.SiteState => {
     switch(action.type) {
@@ -131,7 +131,7 @@ const siteReducer = ( state = initialState, action: types.SiteActionTypes) : typ
             return {
                 ...state,
                 isUpdatingSite: false,
-                siteProvider: action.payload
+                sitesData: action.payload
             };
         case types.UPDATE_SITE_ERROR:
             return {
@@ -182,7 +182,7 @@ const siteReducer = ( state = initialState, action: types.SiteActionTypes) : typ
             return {
                 ...state,
                 isDeletingSiteView: false,
-                siteProvider: { me: action.payload }
+                sitesData: { me: action.payload }
             };
         case types.DELETE_SITE_VIEW_ERROR:
             return {

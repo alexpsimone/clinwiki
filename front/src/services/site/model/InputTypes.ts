@@ -80,3 +80,21 @@ export interface UpdateSiteViewInput {
   clientMutationId?: string | null;
 }
 
+/**
+ * An atomic mutation of site
+ */
+export interface SiteViewMutationInput {
+  path: string[];
+  operation: SiteViewOperation;
+  payload: string;
+}
+
+/**
+ * Possible set of operations of site view
+ */
+export enum SiteViewOperation {
+  DELETE = "DELETE",
+  PUSH = "PUSH",
+  SET = "SET",
+}
+
