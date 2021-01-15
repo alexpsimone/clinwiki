@@ -225,17 +225,17 @@ export interface DeleteSiteViewErrorAction {
 };
 
 export interface UpdateSiteViewSendAction {
-    type: typeof UPDATE_SITE_SEND,
+    type: typeof UPDATE_SITE_VIEW_SEND,
     input: UpdateSiteInput,
 }
 
 export interface UpdateSiteViewSuccessAction {
-    type: typeof UPDATE_SITE_SUCCESS,
+    type: typeof UPDATE_SITE_VIEW_SUCCESS,
     payload: SiteProviderQuery
     };
 
 export interface UpdateSiteViewErrorAction {
-    type: typeof UPDATE_SITE_ERROR,
+    type: typeof UPDATE_SITE_VIEW_ERROR,
     payload: SiteDataError
 };
 
