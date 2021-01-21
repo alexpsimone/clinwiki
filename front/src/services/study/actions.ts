@@ -53,3 +53,16 @@ export const updateStudyViewLogCountError= (message: string) : types.StudyAction
     type: types.UPDATE_STUDY_VIEW_LOG_COUNT_ERROR,
     payload: {message}
 });
+export const fetchFacilitiesPage= ( nctId: string) : types.StudyActionTypes => ({
+    type: types.FETCH_FACILITIES_PAGE_SEND,
+    nctId,
+});
+export const fetchFacilitiesPageSuccess= (payload: any) : types.StudyActionTypes => ({
+    type: types.FETCH_FACILITIES_PAGE_SUCCESS,
+    payload
+});
+export const fetchFacilitiesPageError= (message: string) : types.StudyActionTypes => ({
+    type: types.FETCH_FACILITIES_PAGE_ERROR,
+    payload: {message}
+});
+

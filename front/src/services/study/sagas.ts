@@ -69,10 +69,25 @@ function* updateStudyViewLogCount(action) {
     }
 }
 
+function* getFacilitiesPage(action) {
+    try {
+        let response = yield call(() => api.fetchFacilitiesPage(action.nctId));
+        if(response) {
+            yield put(actions.fetchFacilitiesPageSuccess(response));        }
+        else {
+            yield put(actions.fetchFacilitiesPageError(response.message));
+        }
+    }
+    catch(err) {
+        console.log(err);
+        yield put(actions.fetchFacilitiesPageError(err.message));
+    }
+}
+
 export default function* userSagas() {
     yield takeLatest(types.FETCH_STUDY_PAGE_SEND, getStudyPage);
     yield takeLatest(types.FETCH_PAGE_VIEWS_SEND, getPageViews);
     yield takeLatest(types.FETCH_PAGE_VIEW_SEND, getPageView);
     yield takeLatest(types.UPDATE_STUDY_VIEW_LOG_COUNT_SEND, updateStudyViewLogCount);
-
+    yield takeLatest(types.FETCH_FACILITIES_PAGE_SEND, getFacilitiesPage);
 }

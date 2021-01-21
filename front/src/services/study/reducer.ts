@@ -7,7 +7,9 @@ const initialState: types.StudyState = {
     pageViews: undefined,
     isFetchingPageView: false,
     pageView: undefined,
-    isUpdatingStudyViewLogCount: false
+    isUpdatingStudyViewLogCount: false,
+    isFetchingFacilitiesPage: false,
+    facilitiesPage: undefined,
 };
 
 const studyReducer = ( state = initialState, action: types.StudyActionTypes) : types.StudyState => {
@@ -75,6 +77,23 @@ const studyReducer = ( state = initialState, action: types.StudyActionTypes) : t
                 ...state,
                 isUpdatingStudyViewLogCount: false
             };
+        case types.FETCH_FACILITIES_PAGE_SEND:
+            return {
+                ...state,
+                isFetchingFacilitiesPage: true,
+            };
+        case types.FETCH_FACILITIES_PAGE_SUCCESS:
+            return {
+                ...state,
+                isFetchingFacilitiesPage: false,
+                facilitiesPage: action.payload,
+            };
+        case types.FETCH_FACILITIES_PAGE_ERROR:
+            return {
+                ...state,
+                isFetchingFacilitiesPage: false,
+            };
+
                 
         default:
             return {...state};
