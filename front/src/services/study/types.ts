@@ -1,6 +1,7 @@
 import { CreateStudyViewLogMutation } from './model/CreateStudyViewLogMutation';
 import { PageViewQuery } from './model/PageView';
 import { PageViewsQuery } from './model/PageViews';
+import { SearchStudyPageQuery } from './model/SearchStudyPageQuery';
 
 export const FETCH_STUDY_PAGE_SEND = 'FETCH_STUDY_PAGE_SEND';
 export const FETCH_STUDY_PAGE_SUCCESS = 'FETCH_STUDY_PAGE_SUCCESS';
@@ -18,6 +19,10 @@ export const UPDATE_STUDY_VIEW_LOG_COUNT_SEND = 'UPDATE_STUDY_VIEW_LOG_COUNT_SEN
 export const UPDATE_STUDY_VIEW_LOG_COUNT_SUCCESS = 'UPDATE_STUDY_VIEW_LOG_COUNT_SUCCESS';
 export const UPDATE_STUDY_VIEW_LOG_COUNT_ERROR = 'UPDATE_STUDY_VIEW_LOG_COUNT_ERROR';
 
+export const FETCH_SEARCH_STUDY_PAGE_SEND = 'FETCH_SEARCH_STUDY_PAGE_SEND';
+export const FETCH_SEARCH_STUDY_PAGE_SUCCESS = 'FETCH_SEARCH_STUDY_PAGE_SUCCESS';
+export const FETCH_SEARCH_STUDY_PAGE_ERROR = 'FETCH_SEARCH_STUDY_PAGE_ERROR';
+
 export interface StudyState {
     isFetchingStudy: boolean,
     studyPage: any | undefined,
@@ -25,6 +30,8 @@ export interface StudyState {
     pageViews: PageViewsQuery |undefined,
     isFetchingPageView: boolean,
     pageView: PageViewQuery |undefined,
+    isFetchingSearchStudyPage: boolean,
+    searchStudyPage: SearchStudyPageQuery |undefined,
     isUpdatingStudyViewLogCount: boolean,
     
 
@@ -92,7 +99,23 @@ export interface updateStudyViewLogCountErrorAction {
     payload: SiteDataError
 };
 
+export interface fetchSearchStudyPageSendAction {
+    type: typeof FETCH_SEARCH_STUDY_PAGE_SEND
+    hash: any,
+    id: any
+};
+
+export interface fetchSearchStudyPageSuccessAction {
+    type: typeof FETCH_SEARCH_STUDY_PAGE_SUCCESS,
+    payload: any
+};
+export interface fetchSearchStudyPageErrorAction {
+    type: typeof FETCH_SEARCH_STUDY_PAGE_ERROR,
+    payload: SiteDataError
+};
+
 export type StudyActionTypes = FetchStudyPageSendAction | FetchStudyPageSuccessAction | FetchStudyPageErrorAction |
 FetchPageViewSendAction | FetchPageViewSuccessAction | FetchPageViewErrorAction |
 FetchPageViewsSendAction | FetchPageViewsSuccessAction | FetchPageViewsErrorAction |
-updateStudyViewLogCountSendAction | updateStudyViewLogCountSuccessAction | updateStudyViewLogCountErrorAction;
+updateStudyViewLogCountSendAction | updateStudyViewLogCountSuccessAction | updateStudyViewLogCountErrorAction |
+fetchSearchStudyPageSendAction | fetchSearchStudyPageSuccessAction | fetchSearchStudyPageErrorAction;

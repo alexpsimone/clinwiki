@@ -21,3 +21,7 @@ export const updateStudyViewLogCount = (nctId:any) =>{
     console.log(nctId)
     return callGraphql(ENDPOINT,mutate.CREATE_STUDY_VIEW_LOG_MUTATION, {nctId})
 }
+export const fetchSearchStudyPage= (hash: string, id: string) => {
+    return callGraphql(ENDPOINT, query.SEARCH_STUDY_PAGE_QUERY, {hash, id});
+};
+

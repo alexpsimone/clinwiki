@@ -1,6 +1,7 @@
 import { CreateStudyViewLogMutation } from './model/CreateStudyViewLogMutation';
 import { PageViewQuery } from './model/PageView';
 import { PageViewsQuery } from './model/PageViews';
+import { SearchStudyPageQuery } from './model/SearchStudyPageQuery';
 import * as types from './types';
 
 
@@ -51,5 +52,18 @@ export const updateStudyViewLogCountSuccess= (payload: CreateStudyViewLogMutatio
 });
 export const updateStudyViewLogCountError= (message: string) : types.StudyActionTypes => ({
     type: types.UPDATE_STUDY_VIEW_LOG_COUNT_ERROR,
+    payload: {message}
+});
+export const fetchSearchStudyPage= ( hash: string, id: string) : types.StudyActionTypes => ({
+    type: types.FETCH_SEARCH_STUDY_PAGE_SEND,
+    hash,
+    id,
+});
+export const fetchSearchStudyPageSuccess= (payload: SearchStudyPageQuery) : types.StudyActionTypes => ({
+    type: types.FETCH_SEARCH_STUDY_PAGE_SUCCESS,
+    payload
+});
+export const fetchSearchStudyPageError= (message: string) : types.StudyActionTypes => ({
+    type: types.FETCH_SEARCH_STUDY_PAGE_ERROR,
     payload: {message}
 });
