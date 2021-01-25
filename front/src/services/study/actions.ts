@@ -1,6 +1,7 @@
 import { CreateStudyViewLogMutation } from './model/CreateStudyViewLogMutation';
 import { PageViewQuery } from './model/PageView';
 import { PageViewsQuery } from './model/PageViews';
+import {StudyEditsHistoryQuery } from './model/StudyEditsHistoryQuery';
 import * as types from './types';
 
 
@@ -51,5 +52,17 @@ export const updateStudyViewLogCountSuccess= (payload: CreateStudyViewLogMutatio
 });
 export const updateStudyViewLogCountError= (message: string) : types.StudyActionTypes => ({
     type: types.UPDATE_STUDY_VIEW_LOG_COUNT_ERROR,
+    payload: {message}
+});
+export const fetchStudyEditsHistory = ( nctId: string ) : types.StudyActionTypes => ({
+    type: types.FETCH_STUDY_EDITS_HISTORY_SEND,
+    nctId,
+});
+export const fetchStudyEditsHistorySuccess= (payload: StudyEditsHistoryQuery) : types.StudyActionTypes => ({
+    type: types.FETCH_STUDY_EDITS_HISTORY_SUCCESS,
+    payload
+});
+export const fetchStudyEditsHistoryError= (message: string) : types.StudyActionTypes => ({
+    type: types.FETCH_STUDY_EDITS_HISTORY_ERROR,
     payload: {message}
 });

@@ -7,7 +7,9 @@ const initialState: types.StudyState = {
     pageViews: undefined,
     isFetchingPageView: false,
     pageView: undefined,
-    isUpdatingStudyViewLogCount: false
+    isUpdatingStudyViewLogCount: false,
+    isFetchingStudyEditsHistory: false,
+    StudyEditsHistory: undefined,
 };
 
 const studyReducer = ( state = initialState, action: types.StudyActionTypes) : types.StudyState => {
@@ -75,7 +77,22 @@ const studyReducer = ( state = initialState, action: types.StudyActionTypes) : t
                 ...state,
                 isUpdatingStudyViewLogCount: false
             };
-                
+        case types.FETCH_STUDY_EDITS_HISTORY_SEND:
+            return {
+                ...state,
+                isFetchingStudyEditsHistory: true
+            };
+        case types.FETCH_STUDY_EDITS_HISTORY_SUCCESS:
+            return {
+                ...state,
+                isFetchingStudyEditsHistory: false,
+                StudyEditsHistory: action.payload
+            };
+        case types.FETCH_STUDY_EDITS_HISTORY_ERROR:
+            return {
+                ...state,
+                isFetchingStudyEditsHistory: false
+            }; 
         default:
             return {...state};
     }

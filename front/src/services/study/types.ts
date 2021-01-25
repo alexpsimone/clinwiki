@@ -1,6 +1,7 @@
 import { CreateStudyViewLogMutation } from './model/CreateStudyViewLogMutation';
 import { PageViewQuery } from './model/PageView';
 import { PageViewsQuery } from './model/PageViews';
+import {StudyEditsHistoryQuery } from './model/StudyEditsHistoryQuery';
 
 export const FETCH_STUDY_PAGE_SEND = 'FETCH_STUDY_PAGE_SEND';
 export const FETCH_STUDY_PAGE_SUCCESS = 'FETCH_STUDY_PAGE_SUCCESS';
@@ -18,6 +19,10 @@ export const UPDATE_STUDY_VIEW_LOG_COUNT_SEND = 'UPDATE_STUDY_VIEW_LOG_COUNT_SEN
 export const UPDATE_STUDY_VIEW_LOG_COUNT_SUCCESS = 'UPDATE_STUDY_VIEW_LOG_COUNT_SUCCESS';
 export const UPDATE_STUDY_VIEW_LOG_COUNT_ERROR = 'UPDATE_STUDY_VIEW_LOG_COUNT_ERROR';
 
+export const FETCH_STUDY_EDITS_HISTORY_SEND = 'FETCH_STUDY_EDITS_HISTORY_SEND';
+export const FETCH_STUDY_EDITS_HISTORY_SUCCESS = 'FETCH_STUDY_STUDY_EDITS_HISTORY_SUCCESS';
+export const FETCH_STUDY_EDITS_HISTORY_ERROR = 'FETCH_STUDY_EDITS_HISTORY_ERROR';
+
 export interface StudyState {
     isFetchingStudy: boolean,
     studyPage: any | undefined,
@@ -26,8 +31,8 @@ export interface StudyState {
     isFetchingPageView: boolean,
     pageView: PageViewQuery |undefined,
     isUpdatingStudyViewLogCount: boolean,
-    
-
+    isFetchingStudyEditsHistory: boolean, 
+    StudyEditsHistory:  StudyEditsHistoryQuery | undefined,
 }
 
 export interface SiteDataError {
@@ -92,7 +97,21 @@ export interface updateStudyViewLogCountErrorAction {
     payload: SiteDataError
 };
 
+export interface fetchStudyEditsHistorySendAction {
+    type: typeof FETCH_STUDY_EDITS_HISTORY_SEND
+    nctId: string,
+};
+export interface fetchStudyEditsHistorySuccessAction {
+    type: typeof FETCH_STUDY_EDITS_HISTORY_SUCCESS,
+    payload: any
+};
+export interface fetchStudyEditsHistoryErrorAction {
+    type: typeof FETCH_STUDY_EDITS_HISTORY_ERROR,
+    payload: SiteDataError
+};
+
 export type StudyActionTypes = FetchStudyPageSendAction | FetchStudyPageSuccessAction | FetchStudyPageErrorAction |
 FetchPageViewSendAction | FetchPageViewSuccessAction | FetchPageViewErrorAction |
 FetchPageViewsSendAction | FetchPageViewsSuccessAction | FetchPageViewsErrorAction |
-updateStudyViewLogCountSendAction | updateStudyViewLogCountSuccessAction | updateStudyViewLogCountErrorAction;
+updateStudyViewLogCountSendAction | updateStudyViewLogCountSuccessAction | updateStudyViewLogCountErrorAction |
+fetchStudyEditsHistorySendAction | fetchStudyEditsHistorySuccessAction | fetchStudyEditsHistoryErrorAction;

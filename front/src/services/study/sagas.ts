@@ -69,10 +69,26 @@ function* updateStudyViewLogCount(action) {
     }
 }
 
+function* getStudyEditsHistory(action) {
+    try {
+        let response = yield call(() => api.fetchStudyEditsHistory(action.nctId));
+        if(response) {
+            yield put(actions.fetchStudyEditsHistorySuccess(response));        }
+        else {
+            yield put(actions.fetchStudyEditsHistoryError(response.message));
+        }
+    }
+    catch(err) {
+         console.log(err);
+         yield put(actions.fetchStudyEditsHistoryError(err.message));
+    }
+
+}
+
 export default function* userSagas() {
     yield takeLatest(types.FETCH_STUDY_PAGE_SEND, getStudyPage);
     yield takeLatest(types.FETCH_PAGE_VIEWS_SEND, getPageViews);
     yield takeLatest(types.FETCH_PAGE_VIEW_SEND, getPageView);
     yield takeLatest(types.UPDATE_STUDY_VIEW_LOG_COUNT_SEND, updateStudyViewLogCount);
-
+    yield takeLatest(types.FETCH_STUDY_EDITS_HISTORY_SEND, getStudyEditsHistory);
 }

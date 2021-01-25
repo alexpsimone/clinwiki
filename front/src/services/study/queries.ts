@@ -32,3 +32,36 @@ export const PAGE_VIEW_QUERY = `
   }
   ${PAGE_VIEW_FRAGMENT}
 `;
+
+export const STUDY_EDITS_HISTORY_QUERY = `
+  query StudyEditsHistoryQuery($nctId: String!) {
+    study(nctId: $nctId) {
+      wikiPage {
+        edits {
+          id
+          createdAt
+          changeSet {
+            frontMatterChanged
+            bodyChanged
+            editLines {
+              body
+              content
+              frontMatter
+              status
+            }
+          }
+          comment
+          diff
+          diffHtml
+          user {
+            id
+            firstName
+            lastName
+            email
+          }
+        }
+      }
+    }
+  }
+`;
+

@@ -20,4 +20,7 @@ export const fetchPageView= (url:any) => {
 export const updateStudyViewLogCount = (nctId:any) =>{
     console.log(nctId)
     return callGraphql(ENDPOINT,mutate.CREATE_STUDY_VIEW_LOG_MUTATION, {nctId})
-}
+};
+export const fetchStudyEditsHistory= (nctId: string) => {
+    return callGraphql(ENDPOINT, query.STUDY_EDITS_HISTORY_QUERY, {nctId});
+};
