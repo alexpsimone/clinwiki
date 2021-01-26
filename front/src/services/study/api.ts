@@ -14,7 +14,6 @@ export const fetchPageViews= (siteId: any) => {
     return callGraphql(ENDPOINT, query.PAGE_VIEWS_QUERY, {siteId: siteId.siteId});
 };
 export const fetchPageView= (url:any) => {
-    console.log( url)
     return callGraphql(ENDPOINT, query.PAGE_VIEW_QUERY, {url: url.url});
 };
 export const updateStudyViewLogCount = (nctId:any) =>{
@@ -31,4 +30,10 @@ export const deleteLabelMutation = (nctId:any, key: any, value: any) =>{
 }
 export const fetchCrowdPage= (nctId: any) => {
     return callGraphql(ENDPOINT, query.CROWD_PAGE_QUERY, {nctId});
+}
+export const fetchSuggestedLabels= (nctId: any, crowdBucketsWanted: any) => {
+    return callGraphql(ENDPOINT, query.SUGGESTED_LABELS_QUERY, {nctId: nctId, crowdBucketsWanted: crowdBucketsWanted});
+};
+export const fetchAllWorkFlows= () => {
+    return callGraphql(ENDPOINT, query.WORKFLOW_VIEW_PROVIDER, {});
 };

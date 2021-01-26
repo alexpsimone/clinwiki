@@ -170,3 +170,75 @@ export const CROWD_PAGE_QUERY = `
   ${STUDY_SUMMARY_FRAGMENT}
   ${FRAGMENT}
 `;
+export const SUGGESTED_LABELS_QUERY = `
+query SuggestedLabelsQuery($nctId: String!, $crowdBucketsWanted: [String!]) {
+  crowdAggFacets(crowdBucketsWanted: $crowdBucketsWanted) { 
+    aggs {
+      name
+      buckets {
+        key
+        keyAsString
+        docCount
+      }
+    }
+  }
+  study(nctId: $nctId) {
+    nctId
+    wikiPage {
+      nctId
+      meta
+    }
+  }
+}
+`;
+
+const WORKFLOW_VIEW_PROVIDER_FRAGMENT = `
+  fragment WorkflowsViewFragment on WorkflowsView {
+    id
+    workflows {
+      ...WorkflowConfigFragment
+    }
+  }
+  fragment WorkflowConfigFragment on WorkflowConfig {
+    allSuggestedLabels
+    allWikiSections
+    allSummaryFields
+    disableAddRating
+    hideReviews
+    name
+    summaryTemplate
+    suggestedLabelsFilter {
+      kind
+      values
+    }
+    suggestedLabelsConfig {
+      name
+      rank
+      display
+      order {
+        desc
+        sortKind
+      }
+      visibleOptions {
+        kind
+        values
+      }
+    }
+    wikiSectionsFilter {
+      kind
+      values
+    }
+    summaryFieldsFilter {
+      kind
+      values
+    }
+  }
+`;
+export const WORKFLOW_VIEW_PROVIDER =`
+  query WorkflowsViewProviderQuery {
+    workflowsView {
+      ...WorkflowsViewFragment
+    }
+  }
+  ${WORKFLOW_VIEW_PROVIDER_FRAGMENT}
+`;

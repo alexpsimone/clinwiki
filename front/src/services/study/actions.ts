@@ -65,6 +65,17 @@ export const fetchWorkFlowPageError= (message: string) : types.StudyActionTypes 
     type: types.FETCH_WORKFLOW_PAGE_ERROR,
     payload: {message}
 });
+export const fetchAllWorkFlows= () : types.StudyActionTypes => ({
+    type: types.FETCH_ALL_WORKFLOWS_SEND,
+});
+export const fetchAllWorkFlowsSuccess= (payload: any) : types.StudyActionTypes => ({
+    type: types.FETCH_ALL_WORKFLOWS_SUCCESS,
+    payload
+});
+export const fetchAllWorkFlowsError= (message: string) : types.StudyActionTypes => ({
+    type: types.FETCH_ALL_WORKFLOWS_ERROR,
+    payload: {message}
+});
 export const upsertLabelMutation= ( nctId: any, key: any, value: any) : types.StudyActionTypes => ({
     type: types.UPSERT_LABEL_MUTATION_SEND,
     nctId,
@@ -104,5 +115,18 @@ export const fetchCrowdPageSuccess= (payload: any) : types.StudyActionTypes => (
 });
 export const fetchCrowdPageError= (message: string) : types.StudyActionTypes => ({
     type: types.FETCH_CROWD_PAGE_ERROR,
+    payload: {message}
+});
+export const fetchSuggestedLabels= ( nctId: string, crowdBucketsWanted: string[]) : types.StudyActionTypes => ({
+    type: types.FETCH_SUGGESTED_LABELS_SEND,
+    nctId,
+    crowdBucketsWanted
+});
+export const fetchSuggestedLabelsSuccess= (payload: any) : types.StudyActionTypes => ({
+    type: types.FETCH_SUGGESTED_LABELS_SUCCESS,
+    payload
+});
+export const fetchSuggestedLabelsError= (message: string) : types.StudyActionTypes => ({
+    type: types.FETCH_SUGGESTED_LABELS_ERROR,
     payload: {message}
 });

@@ -14,6 +14,10 @@ const initialState: types.StudyState = {
     isDeletingLabel: false,
     isFetchingCrowdPage: false,
     crowdPage: undefined,
+    isFetchingSuggestedLabels: false,
+    suggestedLabels: undefined,
+    isFetchingAllWorkFlows: false,
+    allWorkFlows: undefined,
 };
 
 const studyReducer = ( state = initialState, action: types.StudyActionTypes) : types.StudyState => {
@@ -81,38 +85,86 @@ const studyReducer = ( state = initialState, action: types.StudyActionTypes) : t
                 ...state,
                 isUpdatingStudyViewLogCount: false
             };
-            case types.FETCH_WORKFLOW_PAGE_SEND:
-                return {
-                    ...state,
-                    isFetchingWorkflow: true
-                };
-            case types.FETCH_WORKFLOW_PAGE_SUCCESS:
-                return {
-                    ...state,
-                    isFetchingWorkflow: false,
-                    workflowPage: action.payload
-                };
-            case types.FETCH_WORKFLOW_PAGE_ERROR:
-                return {
-                    ...state,
-                    isFetchingWorkflow: false
-                };
-            case types.FETCH_CROWD_PAGE_SEND:
-                return {
-                    ...state,
-                    isFetchingCrowdPage: true
-                };
-            case types.FETCH_CROWD_PAGE_SUCCESS:
-                return {
-                    ...state,
-                    isFetchingCrowdPage: false,
-                    crowdPage: action.payload
-                };
-            case types.FETCH_CROWD_PAGE_ERROR:
-                return {
-                    ...state,
-                    isFetchingCrowdPage: false
-                };
+        case types.FETCH_WORKFLOW_PAGE_SEND:
+            return {
+                ...state,
+                isFetchingWorkflow: true
+            };
+        case types.FETCH_WORKFLOW_PAGE_SUCCESS:
+            return {
+                ...state,
+                isFetchingWorkflow: false,
+                workflowPage: action.payload
+            };
+        case types.FETCH_WORKFLOW_PAGE_ERROR:
+            return {
+                ...state,
+                isFetchingWorkflow: false
+            };
+        case types.FETCH_CROWD_PAGE_SEND:
+            return {
+                ...state,
+                isFetchingCrowdPage: true
+            };
+        case types.FETCH_CROWD_PAGE_SUCCESS:
+            return {
+                ...state,
+                isFetchingCrowdPage: false,
+                crowdPage: action.payload
+            };
+        case types.FETCH_CROWD_PAGE_ERROR:
+            return {
+                ...state,
+                isFetchingCrowdPage: false
+            };
+        case types.FETCH_SUGGESTED_LABELS_SEND:
+            return {
+                ...state,
+                isFetchingSuggestedLabels: true
+            };
+        case types.FETCH_SUGGESTED_LABELS_SUCCESS:
+            return {
+                ...state,
+                isFetchingSuggestedLabels: false,
+                suggestedLabels: action.payload
+            };
+        case types.FETCH_SUGGESTED_LABELS_ERROR:
+            return {
+                ...state,
+                isFetchingSuggestedLabels: false
+            };
+        case types.FETCH_ALL_WORKFLOWS_SEND:
+            return {
+                ...state,
+                isFetchingAllWorkFlows: true
+            };
+        case types.FETCH_ALL_WORKFLOWS_SUCCESS:
+            return {
+                ...state,
+                isFetchingAllWorkFlows: false,
+                allWorkFlows: action.payload
+            };
+        case types.FETCH_ALL_WORKFLOWS_ERROR:
+            return {
+                ...state,
+                isFetchingAllWorkFlows: false
+            };
+        case types.FETCH_ALL_WORKFLOWS_SEND:
+            return {
+                ...state,
+                isFetchingAllWorkFlows: true
+            };
+        case types.FETCH_ALL_WORKFLOWS_SUCCESS:
+            return {
+                ...state,
+                isFetchingAllWorkFlows: false,
+                allWorkFlows: action.payload
+            };
+        case types.FETCH_ALL_WORKFLOWS_ERROR:
+            return {
+                ...state,
+                isFetchingAllWorkFlows: false
+            };
         default:
             return {...state};
     }

@@ -3,6 +3,8 @@ import { PageViewQuery } from './model/PageView';
 import { PageViewsQuery } from './model/PageViews';
 import { WorkflowPageQuery } from './model/WorkflowPageQuery';
 import { CrowdPageQuery } from './model/CrowdPageQuery';
+import { WorkflowsViewProviderQuery } from './model/WorkflowsViewProviderQuery';
+import { SuggestedLabelsQuery } from './model/SuggestedLabelsQuery'
 
 export const FETCH_STUDY_PAGE_SEND = 'FETCH_STUDY_PAGE_SEND';
 export const FETCH_STUDY_PAGE_SUCCESS = 'FETCH_STUDY_PAGE_SUCCESS';
@@ -35,6 +37,15 @@ export const DELETE_LABEL_MUTATION_ERROR = 'DELETE_LABEL_MUTATION_ERROR';
 export const FETCH_CROWD_PAGE_SEND = 'FETCH_CROWD_PAGE_SEND';
 export const FETCH_CROWD_PAGE_SUCCESS = 'FETCH_CROWD_PAGE_SUCCESS';
 export const FETCH_CROWD_PAGE_ERROR = 'FETCH_CROWD_PAGE_ERROR';
+
+export const FETCH_SUGGESTED_LABELS_SEND = 'FETCH_SUGGESTED_LABELS_SEND';
+export const FETCH_SUGGESTED_LABELS_SUCCESS = 'FETCH_SUGGESTED_LABELS_SUCCESS';
+export const FETCH_SUGGESTED_LABELS_ERROR = 'FETCH_SUGGESTED_LABELS_ERROR';
+
+export const FETCH_ALL_WORKFLOWS_SEND = 'FETCH_ALL_WORKFLOWS_SEND';
+export const FETCH_ALL_WORKFLOWS_SUCCESS = 'FETCH_ALL_WORKFLOWS_SUCCESS';
+export const FETCH_ALL_WORKFLOWS_ERROR = 'FETCH_ALL_WORKFLOWS_ERROR';
+
 export interface StudyState {
     isFetchingStudy: boolean,
     studyPage: any | undefined,
@@ -49,6 +60,10 @@ export interface StudyState {
     isDeletingLabel: boolean,
     isFetchingCrowdPage: boolean,
     crowdPage: CrowdPageQuery | undefined,
+    isFetchingSuggestedLabels: boolean,
+    suggestedLabels: SuggestedLabelsQuery | undefined,
+    isFetchingAllWorkFlows: boolean,
+    allWorkFlows:  WorkflowsViewProviderQuery| undefined,
 }
 
 export interface SiteDataError {
@@ -172,6 +187,35 @@ export interface fetchCrowdPageErrorAction {
     type: typeof FETCH_CROWD_PAGE_ERROR,
     payload: SiteDataError
 };
+export interface fetchSuggestedLabelsSendAction {
+    type: typeof FETCH_SUGGESTED_LABELS_SEND
+    nctId: any,
+    crowdBucketsWanted: any;
+};
+
+export interface fetchSuggestedLabelsSuccessAction {
+    type: typeof FETCH_SUGGESTED_LABELS_SUCCESS,
+    payload: SuggestedLabelsQuery
+};
+
+export interface fetchSuggestedLabelsErrorAction {
+    type: typeof FETCH_SUGGESTED_LABELS_ERROR,
+    payload: SiteDataError
+};
+export interface fetchAllWorkFlowsSendAction {
+    type: typeof FETCH_ALL_WORKFLOWS_SEND
+
+};
+
+export interface fetchAllWorkFlowsSuccessAction {
+    type: typeof FETCH_ALL_WORKFLOWS_SUCCESS,
+    payload: any
+};
+
+export interface fetchAllWorkFlowsErrorAction {
+    type: typeof FETCH_ALL_WORKFLOWS_ERROR,
+    payload: SiteDataError
+};
 export type StudyActionTypes = fetchStudyPageSendAction | fetchStudyPageSuccessAction | fetchStudyPageErrorAction |
 fetchPageViewSendAction | fetchPageViewSuccessAction | fetchPageViewErrorAction |
 fetchPageViewsSendAction | fetchPageViewsSuccessAction | fetchPageViewsErrorAction |
@@ -179,4 +223,6 @@ updateStudyViewLogCountSendAction | updateStudyViewLogCountSuccessAction | updat
 fetchWorkFlowPageSendAction | fetchWorkFlowPageSuccessAction | fetchWorkFlowPageErrorAction |
 upsertLabelMutationSendAction | upsertLabelMutationSuccessAction | upsertLabelMutationErrorAction |
 deleteLabelMutationSendAction | deleteLabelMutationSuccessAction | deleteLabelMutationErrorAction |
-fetchCrowdPageSendAction | fetchCrowdPageSuccessAction | fetchCrowdPageErrorAction ;
+fetchCrowdPageSendAction | fetchCrowdPageSuccessAction | fetchCrowdPageErrorAction |
+fetchAllWorkFlowsSendAction | fetchAllWorkFlowsSuccessAction | fetchAllWorkFlowsErrorAction |
+fetchSuggestedLabelsSendAction | fetchSuggestedLabelsSuccessAction | fetchSuggestedLabelsErrorAction ;
